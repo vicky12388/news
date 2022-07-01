@@ -30,7 +30,7 @@
         <article-list ref="article-list" :channel="channel" />
         <!-- 文章列表 -->
       </van-tab>
-     
+      <div slot="nav-right" class="placeholder"></div>
       <div
         slot="nav-right"
         class="hamburger-btn"
@@ -64,7 +64,7 @@ import { getUserChannels } from '@/api/user'
 import ArticleList from './components/article-list'
 import ChannelEdit from './components/channel-edit'
 import { mapState } from 'vuex'
-import { getItem,setItem } from '@/utils/storage'
+import { getItem } from '@/utils/storage'
 
 export default {
   name: 'HomeIndex',
@@ -97,19 +97,10 @@ export default {
 
         if (this.user) {
           // 已登录，请求获取用户频道列表
-                // 未登录，判断是否有本地的频道列表数据
-          const localChannels = getItem('userTOUTIAO_CHANNELS')
-          //    有，拿来使用
-          if (localChannels) {
-            channels = localChannels
-          } else {
-            //    没有，请求获取默认频道列表
-            const { data } = await getUserChannels()
-            channels = data.data.channels
-            setItem('userTOUTIAO_CHANNELS', channels)
-          }
+          const { data } = await getUserChannels()
+          channels = data.data.channels
         } else {
-               // 未登录，判断是否有本地的频道列表数据
+          // 未登录，判断是否有本地的频道列表数据
           const localChannels = getItem('TOUTIAO_CHANNELS')
           //    有，拿来使用
           if (localChannels) {
@@ -118,7 +109,6 @@ export default {
             //    没有，请求获取默认频道列表
             const { data } = await getUserChannels()
             channels = data.data.channels
-            setItem('TOUTIAO_CHANNELS', channels)
           }
         }
 
@@ -143,11 +133,9 @@ export default {
 .home-container {
   padding-top: 174px;
   padding-bottom: 100px;
-  .van-nav-bar__title {
-    max-width: unset;
-  }
+
   .search-btn {
-    width: 555px;
+    width: 400px;
     height: 64px;
     background-color: #5babfb;
     border: none;
@@ -221,4 +209,3 @@ export default {
   }
 }
 </style>
-

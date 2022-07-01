@@ -26,7 +26,7 @@
                       false，不作用类名
          -->
         <van-icon
-          v-show="isEdit && !fiexdChannels.includes(channel.id)"
+          v-show="isEdit &&!fiexdChannels.includes(channel.id)"
           slot="icon"
           name="clear"
         ></van-icon>
@@ -146,6 +146,7 @@ export default {
             id: channel.id, // 频道ID
             seq: this.myChannels.length // 序号
           })
+           setItem('USER_TOUTIAO_CHANNELS', this.myChannels)
         } catch (err) {
           this.$toast('保存失败，请稍后重试')
         }
